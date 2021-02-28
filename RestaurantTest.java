@@ -85,6 +85,7 @@ class RestaurantTest {
         selectedItems.addToSelection(firstSelection);
         selectedItems.addToSelection(secondSelection);
         int finalBillAmount = selectedItems.menuTotal(selectedItems);
+        selectedItems.displayOrderTotal(selectedItems);
         assertEquals(388,finalBillAmount);
 
 
@@ -92,10 +93,11 @@ class RestaurantTest {
 
 
     @Test
-    public void when_nothing_is_selected_no_total_is_shown(){
+    public void when_nothing_is_selected_print_please_select_an_item(){
         TotalSelection selectedItems = new TotalSelection();
         int finalBillAmount = selectedItems.menuTotal(selectedItems);
-        assertEquals(0,finalBillAmount);
+        selectedItems.displayOrderTotal(selectedItems);
+        assertEquals("Please Select An Item",finalBillAmount);
     }
 
 }
