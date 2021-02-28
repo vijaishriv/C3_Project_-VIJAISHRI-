@@ -9,6 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.Closeable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,6 +70,7 @@ class RestaurantTest {
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
 
+
         assertThrows(itemNotFoundException.class,
                 ()->restaurant.removeFromMenu("French fries"));
     }
@@ -76,22 +79,23 @@ class RestaurantTest {
     //<<<<<<<<<<<<<<<<<<<MENU TOTAL>>>>>>>>>>>>>>>>>>>>>>>>>>>
     @Test
     public void when_menu_items_are_selected_display_order_total_by_adding_price_of_selected_Items(){
-        restaurant.addToMenu("Sweet corn soup",119);
-        restaurant.addToMenu("Vegetable lasagne", 269);
-        SelectedItem selectedItems = new SelectedItem;
-        selectedItems.add("Sweet corn soup",119);
-        selectedItems.add("Vegetable lasagne",269);
+        TotalSelection selectedItems = new TotalSelection();
+        SelectedItem firstSelection = new SelectedItem("Sweet corn soup", 119);
+        SelectedItem secondSelection = new SelectedItem("Vegetable lasagne", 269);
+        selectedItems.addToSelection(firstSelection);
+        selectedItems.addToSelection(secondSelection);
+        int finalBillAmount = selectedItems.menuTotal(selectedItems);
+        assertEquals(388,finalBillAmount);
 
-        assertEquals(388,selectedItems.getMenuTotal);
 
-        //
     }
+
 
     @Test
     public void when_nothing_is_selected_no_total_is_shown(){
-        restaurant.addToMenu("Sweet corn soup",119);
-        restaurant.addToMenu("Vegetable lasagne", 269);
-        assertEquals(null,selectedItems.getMenuTotal);
+        TotalSelection selectedItems = new TotalSelection();
+        int finalBillAmount = selectedItems.menuTotal(selectedItems);
+        assertEquals(0,finalBillAmount);
     }
 
 }
